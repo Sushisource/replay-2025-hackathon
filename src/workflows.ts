@@ -27,27 +27,28 @@ function resolveAiInput(
 }
 
 export async function example(wfInput: AIHelperWorkflowInput): Promise<string> {
-  let aiToolInput = wfInput.promptInitialInput;
+  const initialInput = wfInput.promptInitialInput;
   let verificationFeedback = initialVerifyOutcome;
 
   const verifyInput: VerifyInput = {
-    verifyTargetPath: `${aiToolInput.workingDirectory}/runner.ts`,
-    expectOutput:
-      ".....\n.....\n.....\n.....\n.....\n.....\n.....\n.....\n.....\n.....",
+    verifyTargetPath: `${wfInput.promptInitialInput.workingDirectory}/runner.ts`,
   };
 
+  let aiInput = initialInput;
   while (!verificationFeedback.success) {
     console.log("Applying AI tool to source...");
 
-    const aiInput = resolveAiInput(aiToolInput, verificationFeedback);
-
     await runAiTool(aiInput);
 
-    console.log("Verification updates applied by AI...");
+    console.log("Verifying updates applied by AI...");
 
     verificationFeedback = await verifyTargetSource(verifyInput, verifyConfig);
 
-    console.log("Verification outcome:", verificationFeedback.success);
+    console.log("Verification outcome:", verificationFeedback);
+    if (verificationFeedback.success) {
+      break;
+    }
+    aiInput = resolveAiInput(aiInput, verificationFeedback);
   }
-  return "Done!";
+  return "Verification succeeded!";
 }

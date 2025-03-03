@@ -5,7 +5,7 @@ export interface VerifyConfig {
 
 export interface VerifyInput {
   verifyTargetPath: string;
-  expectOutput: any;
+  expectOutput?: any;
 }
 
 export interface VerifyOutput {
