@@ -19,7 +19,7 @@ export async function runAiTool(mi: ModelInput): Promise<ModelOutput> {
     lastSawNewOutputAt = Date.now();
   }
   console.log("Spawning aider using working dir", workingDirectory);
-  let args = ["--no-auto-commits", "--yes-always"];
+  let args = ["--no-auto-commits", "--yes-always", "--no-restore-chat-history"];
   args = args.concat(...mi.extraArguments);
   args = args.concat("-m", input);
   const child = spawn("aider", args, {
@@ -39,6 +39,7 @@ export async function runAiTool(mi: ModelInput): Promise<ModelOutput> {
       resolve(code);
     });
   });
+  console.log("Aider Output", output);
   return output;
 }
 
