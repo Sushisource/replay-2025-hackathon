@@ -27,6 +27,7 @@ export async function runAiTool(mi: ModelInput): Promise<ModelOutput> {
   });
   child.stdout.on("data", (data) => {
     output.stdout += data;
+    console.log(":::", output.stdout);
     recheckOutput();
   });
   child.stderr.on("data", (data) => {
@@ -44,19 +45,19 @@ export async function runAiTool(mi: ModelInput): Promise<ModelOutput> {
 
 export async function verifyTargetSource(
   input: VerifyInput,
-  config: VerifyConfig,
+  config: VerifyConfig
 ): Promise<VerifyOutput> {
   try {
     const verifierOutput = execSync(
       `${config.path} ${config.options} ${input.verifyTargetPath}`,
       {
         encoding: "utf-8",
-      },
+      }
     ).trim();
 
     if (verifierOutput !== input.expectOutput) {
       throw new Error(
-        `Expected output does not match actual output. Expected: ${input.expectOutput} Actual: ${verifierOutput}`,
+        `Expected output does not match actual output. Expected: ${input.expectOutput} Actual: ${verifierOutput}`
       );
     }
 

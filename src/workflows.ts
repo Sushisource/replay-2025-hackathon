@@ -8,6 +8,10 @@ import { AIHelperWorkflowInput, ModelInput } from "./models";
 
 const { runAiTool, verifyTargetSource } = proxyActivities<typeof activities>({
   startToCloseTimeout: "1 minute",
+  retry: {
+    initialInterval: 1,
+    backoffCoefficient: 2,
+  }
 });
 
 function resolveAiInput(

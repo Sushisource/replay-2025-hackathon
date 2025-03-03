@@ -16,3 +16,4 @@ node_modules/
 /.idea/replay-2025-hackathon.iml
 /.idea/vcs.xml
 .aider*
+.env
