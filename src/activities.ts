@@ -1,5 +1,5 @@
 import { ModelInput, ModelOutput } from "./models";
-import { exec } from "node:child_process";
+import { exec, execSync } from "node:child_process";
 
 export async function runAiTool(mi: ModelInput): Promise<ModelOutput> {
   const { input, subprocess } = mi;
@@ -15,4 +15,22 @@ export async function runAiTool(mi: ModelInput): Promise<ModelOutput> {
     output.ranSuccessfully = error === null;
   });
   return output;
+}
+
+export async function verifyTargetSource(
+  source: string,
+  verifier: VerifyConfig
+): Promise<VerificationResult> {
+  try {
+    const verifierOutput = execSync(
+      `${verifier.path} ${verifier.options} ${source}`,
+      {
+        encoding: "utf-8",
+      }
+    ).trim();
+    return { success: true, output: verifierOutput };
+  } catch (error) {
+    const errorMessage = (error as any).message;
+    return { success: false, output: errorMessage };
+  }
 }

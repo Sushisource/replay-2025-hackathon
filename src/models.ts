@@ -20,6 +20,7 @@ export interface ModelInput {
 
 export interface ModelOutput {
   stdout: string;
+  stderr: string;
   ranSuccessfully: boolean;
 }
 
