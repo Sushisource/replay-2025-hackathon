@@ -17,3 +17,5 @@ node_modules/
 /.idea/vcs.xml
 .aider*
 .env
+tsconfig.tsbuildinfo
+aiderkey
