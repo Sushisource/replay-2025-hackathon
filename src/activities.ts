@@ -54,7 +54,10 @@ export async function verifyTargetSource(
       },
     ).trim();
 
-    if (verifierOutput !== input.expectOutput) {
+    if (
+      input.expectOutput !== undefined &&
+      verifierOutput !== input.expectOutput
+    ) {
       throw new Error(
         `Expected output does not match actual output. Expected: ${input.expectOutput} Actual: ${verifierOutput}`,
       );
