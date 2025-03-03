@@ -44,7 +44,7 @@ export async function example(name: string): Promise<string> {
 
     const aiInput = resolveAiInput(aiToolInput, verificationFeedback);
 
-    await runAiTool(aiInput);
+    await runClaude(aiInput);
 
     console.log("Verification updates applied by AI...");
 
@@ -52,6 +52,5 @@ export async function example(name: string): Promise<string> {
 
     console.log("Verification outcome:", verificationFeedback.success);
   }
-
   return "Done!";
 }

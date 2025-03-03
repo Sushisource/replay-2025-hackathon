@@ -14,8 +14,8 @@ export interface AIHelperWorkflowInput {
 export interface ModelInput {
   /** Input prompt for the tool */
   input: string;
-  /** Command to use for the AI tool */
-  subprocess: string;
+  extraArguments: string[];
+  workingDirectory: string;
 }
 
 export interface ModelOutput {

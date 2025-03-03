@@ -12,7 +12,8 @@
     "start.watch": "nodemon src/worker.ts",
     "workflow": "ts-node src/client.ts",
     "test": "mocha --exit --require ts-node/register --require source-map-support/register src/mocha/*.test.ts",
-    "run-gol-test": "ts-node src/target-project/runner.ts"
+    "run-gol-test": "ts-node src/target-project/runner.ts",
+    "test-claude": "ts-node src/claude-runner-test.ts"
   },
   "nodemonConfig": {
     "execMap": {

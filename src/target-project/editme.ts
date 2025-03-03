@@ -1,7 +1,7 @@
 // Game of life implementation
 
 class GameOfLife {
-  private board: int[][];
+  private board: boolean[][];
   private width: number;
   private height: number;
 
@@ -18,7 +18,11 @@ class GameOfLife {
   }
 
   public setBoard(board: boolean[][]): void {
-    this.board = board;
+    if (board.length === this.height && board[0].length === this.width) {
+      this.board = board;
+    } else {
+      throw new Error("Board dimensions do not match");
+    }
   }
 
   public nextGeneration(): void {
@@ -77,12 +81,15 @@ export function exampleRun() {
   let initialBoard = [
     [false, false, false, false, false],
     [false, false, true, false, false],
-    [false, true, true, false, false],
+    [false, false, true, true, false],
     [false, false, true, false, false],
     [false, false, false, false, false],
   ];
   let game = new GameOfLife(initialBoard[0].length, initialBoard.length);
+  game.setBoard(initialBoard);
+  console.log("Initial state:");
   game.printBoard();
+  console.log("Next generation:");
   game.nextGeneration();
   game.printBoard();
 }

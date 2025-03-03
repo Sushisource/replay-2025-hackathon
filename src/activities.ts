@@ -4,22 +4,47 @@ import {
   VerifyInput,
 } from "./configs/verify.types";
 import { ModelInput, ModelOutput } from "./models";
-import { exec, execSync } from "node:child_process";
+import { spawn, execSync } from "node:child_process";
 
-export async function runAiTool(mi: ModelInput): Promise<ModelOutput> {
-  const { input, subprocess } = mi;
+export async function runClaude(mi: ModelInput): Promise<ModelOutput> {
+  const { input, workingDirectory } = mi;
   const output: ModelOutput = {
     stdout: "",
     stderr: "",
     ranSuccessfully: false,
   };
-  let commandArray = [subprocess, input];
-  exec(commandArray.join(" "), (error, stdout, stderr) => {
-    output.stdout = stdout;
-    output.stderr = stderr;
-    output.ranSuccessfully = error === null;
+  let sawInputPrompt = false;
+  let lastSawNewOutputAt = Date.now();
+  function recheckOutput() {
+    lastSawNewOutputAt = Date.now();
+  }
+  console.log("Spawning aider");
+  let args = ["--no-auto-commits", "--yes-always"];
+  args = args.concat(...mi.extraArguments);
+  args = args.concat("-m", input);
+  const child = spawn("aider", args, {
+    cwd: workingDirectory,
+  });
+  child.stdout.on("data", (data) => {
+    output.stdout += data;
+    recheckOutput();
+  });
+  child.stderr.on("data", (data) => {
+    output.stderr += data;
+    recheckOutput();
+  });
+  await new Promise((resolve) => {
+    child.on("close", (code) => {
+      output.ranSuccessfully = code === 0;
+      resolve(code);
+    });
   });
   return output;
+}
+
+// Return true if claude is asking for input
+function parseOutputForInputPrompt(output: string): boolean {
+  return output.includes("Yes, and don't ask");
 }
 
 export async function verifyTargetSource(
