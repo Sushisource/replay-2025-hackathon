@@ -5,6 +5,7 @@ import { VerifyInput, VerifyOutput } from "./configs/verify.types";
 import { verifyConfig, initialVerifyOutcome } from "./configs/verify.config";
 import { promptPrefixCaption } from "./configs/model.constants";
 import { ModelInput } from "./models";
+import path from "node:path";
 
 const { runAiTool, verifyTargetSource } = proxyActivities<typeof activities>({
   startToCloseTimeout: "1 minute",
@@ -15,7 +16,10 @@ function getSourcePath(): string {
   return `${process.cwd()}${testProjectLocation}`;
 }
 
-function resolveAiInput(aiToolInput: ModelInput, verificationFeedback: VerifyOutput) {
+function resolveAiInput(
+  aiToolInput: ModelInput,
+  verificationFeedback: VerifyOutput,
+) {
   return verificationFeedback.output
     ? {
         ...aiToolInput,
@@ -28,7 +32,8 @@ function resolveAiInput(aiToolInput: ModelInput, verificationFeedback: VerifyOut
 export async function example(name: string): Promise<string> {
   const aiToolInput: ModelInput = {
     input: name,
-    subprocess: "claude",
+    extraArguments: ["--sonnet"],
+    workingDirectory: path.resolve(__filename, "target-project"),
   };
 
   let verificationFeedback = initialVerifyOutcome;
@@ -44,7 +49,7 @@ export async function example(name: string): Promise<string> {
 
     const aiInput = resolveAiInput(aiToolInput, verificationFeedback);
 
-    await runClaude(aiInput);
+    await runAiTool(aiInput);
 
     console.log("Verification updates applied by AI...");
 

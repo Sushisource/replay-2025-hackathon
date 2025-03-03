@@ -1,4 +1,4 @@
-import { runClaude } from "./activities";
+import { runAiTool } from "./activities";
 import { ModelInput } from "./models";
 import path from "node:path";
 
@@ -11,7 +11,7 @@ async function run() {
     extraArguments: ["--sonnet"],
     workingDirectory: abspath,
   };
-  const output = await runClaude(input);
+  const output = await runAiTool(input);
   console.log("Output", output);
 }
 

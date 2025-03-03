@@ -6,7 +6,7 @@ import {
 import { ModelInput, ModelOutput } from "./models";
 import { spawn, execSync } from "node:child_process";
 
-export async function runClaude(mi: ModelInput): Promise<ModelOutput> {
+export async function runAiTool(mi: ModelInput): Promise<ModelOutput> {
   const { input, workingDirectory } = mi;
   const output: ModelOutput = {
     stdout: "",
@@ -49,19 +49,19 @@ function parseOutputForInputPrompt(output: string): boolean {
 
 export async function verifyTargetSource(
   input: VerifyInput,
-  config: VerifyConfig
+  config: VerifyConfig,
 ): Promise<VerifyOutput> {
   try {
     const verifierOutput = execSync(
       `${config.path} ${config.options} ${input.verifyTargetPath}`,
       {
         encoding: "utf-8",
-      }
+      },
     ).trim();
 
     if (verifierOutput !== input.expectOutput) {
       throw new Error(
-        `Expected output does not match actual output. Expected: ${input.expectOutput} Actual: ${verifierOutput}`
+        `Expected output does not match actual output. Expected: ${input.expectOutput} Actual: ${verifierOutput}`,
       );
     }
 
