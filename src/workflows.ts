@@ -5,7 +5,6 @@ import { VerifyInput, VerifyOutput } from "./configs/verify.types";
 import { verifyConfig, initialVerifyOutcome } from "./configs/verify.config";
 import { promptPrefixCaption } from "./configs/model.constants";
 import { AIHelperWorkflowInput, ModelInput } from "./models";
-import path from "node:path";
 
 const { runAiTool, verifyTargetSource } = proxyActivities<typeof activities>({
   startToCloseTimeout: "1 minute",
@@ -23,7 +22,6 @@ function resolveAiInput(
     : aiToolInput;
 }
 
-/** A workflow that simply calls an activity */
 export async function example(wfInput: AIHelperWorkflowInput): Promise<string> {
   let aiToolInput = wfInput.promptInitialInput;
   let verificationFeedback = initialVerifyOutcome;

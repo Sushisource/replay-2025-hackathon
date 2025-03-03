@@ -76,20 +76,3 @@ class GameOfLife {
     return count;
   }
 }
-
-export function exampleRun() {
-  let initialBoard = [
-    [false, false, false, false, false],
-    [false, false, true, false, false],
-    [false, false, true, true, false],
-    [false, false, true, false, false],
-    [false, false, false, false, false],
-  ];
-  let game = new GameOfLife(initialBoard[0].length, initialBoard.length);
-  game.setBoard(initialBoard);
-  console.log("Initial state:");
-  game.printBoard();
-  console.log("Next generation:");
-  game.nextGeneration();
-  game.printBoard();
-}

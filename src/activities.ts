@@ -42,11 +42,6 @@ export async function runAiTool(mi: ModelInput): Promise<ModelOutput> {
   return output;
 }
 
-// Return true if claude is asking for input
-function parseOutputForInputPrompt(output: string): boolean {
-  return output.includes("Yes, and don't ask");
-}
-
 export async function verifyTargetSource(
   input: VerifyInput,
   config: VerifyConfig,
