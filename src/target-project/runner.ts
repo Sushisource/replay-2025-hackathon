@@ -16,9 +16,9 @@ let initialBoard = [
 ];
 let expectedBoard = [
   [false, false, false, false, false],
-  [false, true, false, false, false],
+  [false, false, true, false, false],
+  [false, false, false, true, true],
   [false, false, true, true, false],
-  [false, true, true, false, false],
   [false, false, false, false, false],
 ];
 let game = new GameOfLife(initialBoard[0].length, initialBoard.length);
