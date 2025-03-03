@@ -18,6 +18,11 @@ export interface ModelInput {
   subprocess: string;
 }
 
+export interface ModelOutput {
+  stdout: string;
+  ranSuccessfully: boolean;
+}
+
 /** Input to the tool that verifies AI changes */
 export interface VerificationToolInput {
   /** Command to use for the verification tool */
