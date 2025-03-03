@@ -2,7 +2,7 @@ import {
   VerifyOutput,
   VerifyConfig,
   VerifyInput,
-} from "./configs/config.types";
+} from "./configs/verify.types";
 import { ModelInput, ModelOutput } from "./models";
 import { exec, execSync } from "node:child_process";
 

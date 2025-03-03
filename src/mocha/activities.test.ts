@@ -2,8 +2,8 @@ import { MockActivityEnvironment } from "@temporalio/testing";
 import { describe, it } from "mocha";
 import * as activities from "../activities";
 import assert from "assert";
-import { verifyConfig } from "../configs/verifty.config";
-import { VerifyInput } from "../configs/config.types";
+import { verifyConfig } from "../configs/verify.config";
+import { VerifyInput } from "../configs/verify.types";
 
 describe("verifyTargetSource activity", async () => {
   it("successfully executes the the project runner", async () => {
