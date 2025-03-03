@@ -6,12 +6,12 @@ export async function greet(name: string): Promise<string> {
 }
 
 export async function verifyTargetSource(
-  source: string,
+  sourceLocation: string,
   verifier: VerifyConfig
 ): Promise<VerificationResult> {
   try {
     const verifierOutput = execSync(
-      `${verifier.path} ${verifier.options} ${source}`,
+      `${verifier.path} ${verifier.options} ${sourceLocation}`,
       {
         encoding: "utf-8",
       }
