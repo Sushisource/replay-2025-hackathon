@@ -10,3 +10,8 @@ wheels/
 .venv
 node_modules/
 /lib/
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/replay-2025-hackathon.iml
+/.idea/vcs.xml
