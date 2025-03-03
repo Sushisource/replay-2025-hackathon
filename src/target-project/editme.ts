@@ -45,12 +45,6 @@ class GameOfLife {
     this.board = newBoard;
   }
 
-  public printBoard(): void {
-    for (let row of this.board) {
-      console.log(row.map((cell) => (cell ? "X" : ".")).join(""));
-    }
-  }
-
   private countNeighbors(x: number, y: number): number {
     let count = 0;
 
