@@ -4,6 +4,11 @@ import { nanoid } from "nanoid";
 import path from "node:path";
 
 async function run() {
+  // Get prompt input as argument
+  const inputArg =
+    process.argv[2] ??
+    "Edit src/target-project/editme.ts to fix any type errors, and correct any mistakes in the game of life implementation. Also optimize the implementation.";
+
   // Connect to the default Server location
   const connection = await Connection.connect({ address: "localhost:7233" });
 
@@ -18,8 +23,7 @@ async function run() {
     args: [
       {
         promptInitialInput: {
-          input:
-            "Edit src/target-project/editme.ts to fix any type errors, and correct any mistakes in the game of life implementation. Also optimize the implementation.",
+          input: inputArg,
           extraArguments: ["--sonnet"],
           workingDirectory: path.resolve(__dirname, "target-project"),
         },
