@@ -4,15 +4,6 @@ import * as activities from "../activities";
 import assert from "assert";
 import { verifyConfig } from "../configs/verifty.config";
 
-describe("greet activity", async () => {
-  it("successfully greets the user", async () => {
-    const env = new MockActivityEnvironment();
-    const name = "Temporal";
-    const result = await env.run(activities.greet, name);
-    assert.equal(result, "Hello, Temporal!");
-  });
-});
-
 describe("verifyTargetSource activity", async () => {
   it("successfully executes the the project runner", async () => {
     const env = new MockActivityEnvironment();
