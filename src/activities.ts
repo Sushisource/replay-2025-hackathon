@@ -1,4 +1,8 @@
-import { VerificationResult, VerifyConfig } from "./configs/config.types";
+import {
+  VerifyOutput,
+  VerifyConfig,
+  VerifyInput,
+} from "./configs/config.types";
 import { ModelInput, ModelOutput } from "./models";
 import { exec, execSync } from "node:child_process";
 
@@ -19,16 +23,23 @@ export async function runAiTool(mi: ModelInput): Promise<ModelOutput> {
 }
 
 export async function verifyTargetSource(
-  sourceLocation: string,
-  verifier: VerifyConfig
-): Promise<VerificationResult> {
+  input: VerifyInput,
+  config: VerifyConfig
+): Promise<VerifyOutput> {
   try {
     const verifierOutput = execSync(
-      `${verifier.path} ${verifier.options} ${sourceLocation}`,
+      `${config.path} ${config.options} ${input.verifyTargetPath}`,
       {
         encoding: "utf-8",
-      },
+      }
     ).trim();
+
+    if (verifierOutput !== input.expectOutput) {
+      throw new Error(
+        `Expected output does not match actual output. Expected: ${input.expectOutput} Actual: ${verifierOutput}`
+      );
+    }
+
     return { success: true, output: verifierOutput };
   } catch (error) {
     const errorMessage = (error as any).message;

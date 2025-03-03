@@ -3,7 +3,12 @@ export interface VerifyConfig {
   options: string;
 }
 
-export interface VerificationResult {
+export interface VerifyInput {
+  verifyTargetPath: string;
+  expectOutput: any;
+}
+
+export interface VerifyOutput {
   success: boolean;
   output: string;
 }
