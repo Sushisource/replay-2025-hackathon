@@ -1,3 +1,4 @@
+import { VerificationResult, VerifyConfig } from "./configs/config.types";
 import { ModelInput, ModelOutput } from "./models";
 import { exec, execSync } from "node:child_process";
 
@@ -19,14 +20,14 @@ export async function runAiTool(mi: ModelInput): Promise<ModelOutput> {
 
 export async function verifyTargetSource(
   source: string,
-  verifier: VerifyConfig
+  verifier: VerifyConfig,
 ): Promise<VerificationResult> {
   try {
     const verifierOutput = execSync(
       `${verifier.path} ${verifier.options} ${source}`,
       {
         encoding: "utf-8",
-      }
+      },
     ).trim();
     return { success: true, output: verifierOutput };
   } catch (error) {
