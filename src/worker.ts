@@ -1,6 +1,5 @@
-// @@@SNIPSTART typescript-hello-worker
-import { NativeConnection, Worker } from '@temporalio/worker';
-import * as activities from './activities';
+import { NativeConnection, Worker } from "@temporalio/worker";
+import * as activities from "./activities";
 
 async function run() {
   // Step 1: Establish a connection with Temporal server.
@@ -8,17 +7,17 @@ async function run() {
   // Worker code uses `@temporalio/worker.NativeConnection`.
   // (But in your application code it's `@temporalio/client.Connection`.)
   const connection = await NativeConnection.connect({
-    address: 'localhost:7233',
+    address: "localhost:7233",
     // TLS and gRPC metadata configuration goes here.
   });
   try {
     // Step 2: Register Workflows and Activities with the Worker.
     const worker = await Worker.create({
       connection,
-      namespace: 'default',
-      taskQueue: 'hello-world',
+      namespace: "default",
+      taskQueue: "hello-world",
       // Workflows are registered using a path as they run in a separate JS context.
-      workflowsPath: require.resolve('./workflows'),
+      workflowsPath: require.resolve("./workflows"),
       activities,
     });
 
@@ -41,4 +40,3 @@ run().catch((err) => {
   console.error(err);
   process.exit(1);
 });
-// @@@SNIPEND
