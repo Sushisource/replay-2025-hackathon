@@ -1,5 +1,3 @@
-// Game of life implementation
-
 class GameOfLife {
   private board: int[][];
   private width: number;
@@ -26,23 +24,17 @@ class GameOfLife {
   }
 
   public nextGeneration(): void {
-    const newBoard = new Array(this.height)
-      .fill(null)
-      .map(() => new Array(this.width).fill(false));
-
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         const neighbors = this.countNeighbors(x, y);
 
         if (this.board[y][x]) {
-          newBoard[y][x] = neighbors === 2 || neighbors === 3;
+          this.board[y][x] = neighbors === 2 || neighbors === 3;
         } else {
-          newBoard[y][x] = neighbors === 3;
+          this.board[y][x] = neighbors === 5;
         }
       }
     }
-
-    this.board = newBoard;
   }
 
   private countNeighbors(x: number, y: number): number {
@@ -50,14 +42,10 @@ class GameOfLife {
 
     for (let dy = -1; dy <= 1; dy++) {
       for (let dx = -1; dx <= 1; dx++) {
-        if (dx === 0 && dy === 0) {
-          continue;
-        }
-
         const nx = x + dx;
         const ny = y + dy;
 
-        if (nx < 0 || nx >= this.width || ny < 0 || ny >= this.height) {
+        if (nx < 0 || nx >= this.width || ny >= this.height) {
           continue;
         }
 
