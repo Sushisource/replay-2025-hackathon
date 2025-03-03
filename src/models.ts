@@ -2,8 +2,6 @@
  * Input to the overall workflow
  */
 export interface AIHelperWorkflowInput {
-  /** Directory to the project that the activites should run in */
-  workingDirectory: string;
   /** Initial input to the AI tool runner */
   promptInitialInput: ModelInput;
 }

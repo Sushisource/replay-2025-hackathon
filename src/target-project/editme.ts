@@ -1,7 +1,7 @@
 // Game of life implementation
 
 class GameOfLife {
-  private board: boolean[][];
+  private board: int[][];
   private width: number;
   private height: number;
 

@@ -1,6 +1,7 @@
 import { Connection, Client } from "@temporalio/client";
 import { example } from "./workflows";
 import { nanoid } from "nanoid";
+import path from "node:path";
 
 async function run() {
   // Connect to the default Server location
@@ -14,7 +15,16 @@ async function run() {
   const handle = await client.workflow.start(example, {
     taskQueue: "hello-world",
     // type inference works! args: [name: string]
-    args: ["Temporal"],
+    args: [
+      {
+        promptInitialInput: {
+          input:
+            "Edit src/target-project/editme.ts to fix any type errors, and correct any mistakes in the game of life implementation",
+          extraArguments: ["--sonnet"],
+          workingDirectory: path.resolve(__filename, "target-project"),
+        },
+      },
+    ],
     // in practice, use a meaningful business ID, like customerId or transactionId
     workflowId: "workflow-" + nanoid(),
   });

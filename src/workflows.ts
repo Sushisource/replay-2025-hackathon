@@ -4,7 +4,7 @@ import type * as activities from "./activities";
 import { VerifyInput, VerifyOutput } from "./configs/verify.types";
 import { verifyConfig, initialVerifyOutcome } from "./configs/verify.config";
 import { promptPrefixCaption } from "./configs/model.constants";
-import { ModelInput } from "./models";
+import { AIHelperWorkflowInput, ModelInput } from "./models";
 import path from "node:path";
 
 const { runAiTool, verifyTargetSource } = proxyActivities<typeof activities>({
@@ -29,13 +29,8 @@ function resolveAiInput(
 }
 
 /** A workflow that simply calls an activity */
-export async function example(name: string): Promise<string> {
-  const aiToolInput: ModelInput = {
-    input: name,
-    extraArguments: ["--sonnet"],
-    workingDirectory: path.resolve(__filename, "target-project"),
-  };
-
+export async function example(wfInput: AIHelperWorkflowInput): Promise<string> {
+  let aiToolInput = wfInput.promptInitialInput;
   let verificationFeedback = initialVerifyOutcome;
 
   const verifyInput: VerifyInput = {
