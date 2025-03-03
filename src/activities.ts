@@ -13,11 +13,6 @@ export async function runAiTool(mi: ModelInput): Promise<ModelOutput> {
     stderr: "",
     ranSuccessfully: false,
   };
-  let sawInputPrompt = false;
-  let lastSawNewOutputAt = Date.now();
-  function recheckOutput() {
-    lastSawNewOutputAt = Date.now();
-  }
   console.log("Spawning aider using working dir", workingDirectory);
   let args = ["--no-auto-commits", "--yes-always", "--no-restore-chat-history"];
   args = args.concat(...mi.extraArguments);
@@ -28,11 +23,9 @@ export async function runAiTool(mi: ModelInput): Promise<ModelOutput> {
   child.stdout.on("data", (data) => {
     output.stdout += data;
     console.log(":::", output.stdout);
-    recheckOutput();
   });
   child.stderr.on("data", (data) => {
     output.stderr += data;
-    recheckOutput();
   });
   await new Promise((resolve) => {
     child.on("close", (code) => {
@@ -46,14 +39,14 @@ export async function runAiTool(mi: ModelInput): Promise<ModelOutput> {
 
 export async function verifyTargetSource(
   input: VerifyInput,
-  config: VerifyConfig
+  config: VerifyConfig,
 ): Promise<VerifyOutput> {
   try {
     const verifierOutput = execSync(
       `${config.path} ${config.options} ${input.verifyTargetPath}`,
       {
         encoding: "utf-8",
-      }
+      },
     ).trim();
 
     if (
@@ -61,7 +54,7 @@ export async function verifyTargetSource(
       verifierOutput !== input.expectOutput
     ) {
       throw new Error(
-        `Expected output does not match actual output. Expected: ${input.expectOutput} Actual: ${verifierOutput}`
+        `Expected output does not match actual output. Expected: ${input.expectOutput} Actual: ${verifierOutput}`,
       );
     }
 
