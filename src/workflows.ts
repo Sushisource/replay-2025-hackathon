@@ -11,11 +11,6 @@ const { runAiTool, verifyTargetSource } = proxyActivities<typeof activities>({
   startToCloseTimeout: "1 minute",
 });
 
-function getSourcePath(): string {
-  const testProjectLocation = "/src/target-project/runner.ts";
-  return `${process.cwd()}${testProjectLocation}`;
-}
-
 function resolveAiInput(
   aiToolInput: ModelInput,
   verificationFeedback: VerifyOutput,
@@ -34,7 +29,7 @@ export async function example(wfInput: AIHelperWorkflowInput): Promise<string> {
   let verificationFeedback = initialVerifyOutcome;
 
   const verifyInput: VerifyInput = {
-    verifyTargetPath: getSourcePath(),
+    verifyTargetPath: `${aiToolInput.workingDirectory}/runner.ts`,
     expectOutput:
       ".....\n.....\n.....\n.....\n.....\n.....\n.....\n.....\n.....\n.....",
   };

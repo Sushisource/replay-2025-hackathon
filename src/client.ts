@@ -21,7 +21,7 @@ async function run() {
           input:
             "Edit src/target-project/editme.ts to fix any type errors, and correct any mistakes in the game of life implementation",
           extraArguments: ["--sonnet"],
-          workingDirectory: path.resolve(__filename, "target-project"),
+          workingDirectory: path.resolve(__dirname, "target-project"),
         },
       },
     ],

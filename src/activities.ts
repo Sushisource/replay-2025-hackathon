@@ -18,7 +18,7 @@ export async function runAiTool(mi: ModelInput): Promise<ModelOutput> {
   function recheckOutput() {
     lastSawNewOutputAt = Date.now();
   }
-  console.log("Spawning aider");
+  console.log("Spawning aider using working dir", workingDirectory);
   let args = ["--no-auto-commits", "--yes-always"];
   args = args.concat(...mi.extraArguments);
   args = args.concat("-m", input);
